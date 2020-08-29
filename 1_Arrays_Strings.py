@@ -3,6 +3,7 @@
 
 #Q1.1: Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?
 
+
 def question1_1(string):
     print("----------\n" + "1.1 Is Unique: Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?\n" + "Input: " + string)
     for a in string:
@@ -207,7 +208,7 @@ def main():
     print(question1_1("ab"))
     print(question1_2("ab", "bac"))
     print(question1_3("This is pretty easy"))
-    print(question1_4("taco cat"))
+    print(question1_4("booger"))
     print(question1_5("ble", "blue"))
     print(question1_6("aabcccccaaa"))
     question1_7_input = [["A", "B", "C"], ["D", "E", "F"], ["G", "H", "I"]]

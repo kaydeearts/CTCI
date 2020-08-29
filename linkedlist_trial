@@ -1,0 +1,87 @@
+class Node:
+  def __init__(self, value, n_next, n_prev):
+    self.value = value
+    self.n_next = n_next
+    self.n_prev = n_prev
+
+class LinkedList():
+  def __init__(self):
+    self.head = None
+    self.tail = self.head	# head and tail are the same at first
+
+  def __str__(self):
+        ptr = self.head
+        print('[', end = '')
+        while(ptr):
+          print(ptr.value, end = ' ')
+          ptr = ptr.n_next
+        print(']')
+
+  def insert(self, index, new_value):
+    newNode = Node(new_value, None, None)
+    #if empty, add as head:
+    if self.head == None:
+      self.head = newNode
+      self.tail = newNode
+    #else, add into index
+    else:
+      #check if index exists:
+      if index > self.get_size():
+        return SyntaxError
+      else:
+        ptr = self.head
+        prevNode = None
+        count = 0
+        while(count < index):
+          #loop to next
+          prevNode = ptr
+          ptr = ptr.n_next
+          count = count + 1
+        tempNode = ptr
+        prevNode.n_next = newNode
+        newNode.n_prev = prevNode
+        if tempNode:
+          print("not tail!")
+          newNode.n_next = tempNode
+          tempNode.n_prev = newNode
+
+  def print_linked_list(self):
+    ptr = self.head
+    while(ptr):
+      print(ptr.value)
+      ptr = ptr.n_next
+
+  def get_size(self):
+    size = 0
+    ptr = self.head
+    while(ptr):
+      size = size + 1
+      ptr = ptr.n_next
+    return size
+
+def previous(self, node_index):
+  try:
+  	index = node_index - 1
+  except:
+    return SyntaxError
+    return node_index
+  for node in self:
+    if index <= 0:
+      return node
+    else:
+      index = index - 1
+
+def main():
+  numList = [1,2,3]
+  linkedlist = LinkedList()
+  index = 0
+  for number in numList:
+    print('inserting number', number, 'into index ', index)
+    linkedlist.insert(index, number)
+    index = index + 1
+  print("outside loop")
+  linkedlist.insert(2, 8)
+  linkedlist.print_linked_list()
+  print('size:', linkedlist.get_size())
+
+main()
