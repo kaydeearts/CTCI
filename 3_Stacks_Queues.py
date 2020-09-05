@@ -1,5 +1,6 @@
 # CTCI Questions & Answers
 # CHAPTER 3: Stacks & Queues
+import copy
 
 class Stack:
     def __init__(self, array):
@@ -13,7 +14,7 @@ class Stack:
     #add to the top
     def push(self, item):
         #loop through the Stack
-        self.stack[len(self.stack)-1] = item
+        self.stack.append(item)
         self.top = item
         self.minDict[len(self.stack)-1] = self.min
 
@@ -21,12 +22,10 @@ class Stack:
         #remove the top
         if len(self.stack) == 0:
             return
-        elif len(self.stack) == 1:
+        else:
+            self.stack.pop(len(self.stack)-1)
             self.top = self.stack[len(self.stack)-1]
             self.topIndex = len(self.stack)-1
-        else:
-            self.top = self.stack[len(self.stack)-2]
-            self.topIndex = len(self.stack)-2
 
     def peek(self):
         #return top, don't remove
@@ -81,42 +80,83 @@ def question3_3():
     print("----------\n" + "3.3 How can you create a SetofStacks that holds multiple stacks, where a new stack is created once the last is overfilled?\n")
 
 class SetOfStacks():
-    def __init__(self, array):
+    def __init__(self, array, capacity):
         self.stack = array
-        self.setNumber = 0
-        self.top = [] #the top of each array
+        self.top = array[len(array)-1]
+        self.size = len(array)
+        self.limit = capacity
+        self.stackNumber = 0
+        self.setDict = {}
+        self.index = 0
 
-    def push(self, Stack):
-        self.setNumber = self.setNumber + 1
-        self.stack = self.stack + Stack.stack
-        # self.top[self.setNumber-1] = Stack.topIndex
+    def push(self, item):
+        #if limit has been reached, indicate new stack
+        if self.limit == self.size:
+            self.setDict[self.stackNumber] = self.index + 1 #record the current index
+            self.stackNumber = self.stackNumber + 1 #increment stack number because of new stack
+            self.limit = self.limit + self.limit
+        self.stack.append(item)
+        self.size = self.size + 1
+        self.top = item
+        self.index = self.index + 1
 
-    def pop(self, Stack):
+    def pop(self):
+        #remove the top
+        if self.size == 0:
+            return
+        elif self.size == 1:
+            self.top = self.stack[self.size-1]
+            self.topIndex = self.size-1
+        else:
+            self.top = self.stack[self.size-2]
+            self.topIndex = self.size-2
+
+    def popAt(self, stack_number):
+        #example: pop at stack #3
+        tempTop = self.setDict[stack_number]
+        if self.size == 0:
+            return
+        elif self.size == 1:
+            self.stack[tempTop] = self.stack[tempTop-1]
+        else:
+            self.stack[tempTop] = None
+
+    def printStack(self):
+        printList = []
+        index = 0
+        item = self.stack[index]
+        while(item != self.top):
+            printList.insert(0, item)
+            index = index + 1
+            item = self.stack[index]
+        printList.insert(0, item)
+        print(printList)
 
 
 # Q4: Implement a MyQueue Class which implements a Queue using two stacks:
 def question3_4():
     print("----------\n" + "3.4 Implement a MyQueue Class which implements a Queue using two stacks:\n")
 
-class QueueStack:
+class MyQueue:
     def __init__(self, push_stack: Stack):
         self.push_stack = push_stack
-        self.pop_stack = []
+        self.pop_stack = Stack(push_stack.stack)
 
     def addQ(self, value: int):
+        print('addQ')
         self.push_stack.push(value) # add the new value to the push_stack
-        temp = copy.copy(self.push_stack.stack)
-        temp = temp.reverse()
-        self.pop_stack = temp   # this is for keeping the push_stack and pop_stack identical
+        self.pop_stack.stack = self.push_stack.stack.copy()
+        self.pop_stack.stack.reverse()
 
     def removeQ(self):
-        self.push_stack.pop()
-        temp = copy.copy(self.push_stack.stack)
-        temp = temp.reverse()
-        self.pop_stack = temp   # this is for keeping the push_stack and pop_stack identical
+        print('pushStack')
+        self.pop_stack.pop()
+        # self.pop_stack.stack.reverse()
+        self.push_stack.stack = self.pop_stack.stack.copy()
 
     def printQ(self):
-        self.push_stack.printStack()
+        self.pop_stack.printStack()
+
 
 # Q5: Write a program to sort stack such that the smallest items are on top. Use an additional temporary stack, do not copy elements into other data structures (such as array)
 # Stack supports push, pop, peek and isEmpty
@@ -133,12 +173,41 @@ def question3_6():
 
 
 def main():
+    print("LinkedList Python Library + Solutions to Chapter 2: LinkedLists")
+    print("Written by Kamile Demir")
     stack = Stack([1,2,3,4])
     stack.push(9)
     print(stack.stack)
     print(stack.peek())
     stack.pop()
     stack.printStack()
+
+    question3_3()
+    SetofStacks = SetOfStacks([1,2], 3)
+    print("Created SetOfStacks Class with push(), pop(), and popAt()")
+    print("Initialized Set of Stacks with capacity 3:")
+    SetofStacks.printStack()
+    print("Pushing 3rd element, causing second stack to form:")
+    SetofStacks.push(3)
+    SetofStacks.printStack()
+    print("Pushing another element into second stack:")
+    SetofStacks.push(4)
+    SetofStacks.printStack()
+    print("Popping from the FIRST stack:")
+    SetofStacks.popAt(0)
+    SetofStacks.printStack()
+
+    question3_4()
+    pushStack = Stack([1,2,3,5])
+    print("Initializing queue")
+    queue = MyQueue(pushStack)
+    queue.printQ()
+    print("Enqueue 8:", end='')
+    queue.addQ(8)
+    queue.printQ()
+    print("Dequeue:", end='')
+    queue.removeQ()
+    queue.printQ()
 
 
 main()
