@@ -14,7 +14,7 @@ import sys
 
 def minimumSwaps(arr):
     index = 0 #current index
-    value = 1 #value 1 -> N 
+    value = 1 #value 1 -> N
     count = 0 #count of swaps
     while index < len(arr): #traverse array until the end
         if arr[index] != value: #if current index does not hold the value it should (there exist values 1...N in this array)
@@ -27,3 +27,25 @@ def minimumSwaps(arr):
             index = index + 1
             value = value + 1
     return count
+
+
+# Complete the arrayManipulation function below.
+# Starting with a 1-indexed array of zeros and a list of operations,
+# for each operation add a value to each of the array element between two given indices, inclusive.
+# Once all operations have been performed, return the maximum value in your array.
+def arrayManipulation(n, queries):
+    arr = [0]*(n+1)
+    for update in queries:
+        arr[update[0]-1] = arr[update[0]-1] + update[2]
+        arr[update[1]] = arr[update[1]] + (-1 * update[2])
+    adding = 0
+    index = 0
+    maxNum = 0
+    while index < n:
+        # arr[index] = arr[index] + adding
+        if arr[index] != 0:
+            adding = arr[index] + adding
+        if adding > maxNum:
+            maxNum = adding
+        index = index + 1
+    return maxNum
