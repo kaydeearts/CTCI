@@ -6,12 +6,31 @@ import random
 import re
 import sys
 
+# Lilah has a string, , of lowercase English letters that she repeated infinitely many times.
+# Given an integer, , find and print the number of letter a's in the first  letters of Lilah's infinite string
+# Complete the repeatedString function below.
+def repeatedString(s, n):
+    count = 0
+    for i in s:
+        if i == 'a':
+            count = count + 1
+    leftover = n % len(s)
+    full_sets = n - leftover
+    count = count * (full_sets / len(s))
+    index = 0
+    while leftover > 0:
+        if s[index] == 'a':
+            count = count + 1
+        index = index + 1
+        leftover = leftover - 1
+    return int(count)
+
+
+
+
 # You are given an unordered array consisting of consecutive integers  [1, 2, 3, ..., n] without any duplicates.
 # You are allowed to swap any two elements.
 # You need to find the minimum number of swaps required to sort the array in ascending order.
-
-
-
 def minimumSwaps(arr):
     index = 0 #current index
     value = 1 #value 1 -> N
