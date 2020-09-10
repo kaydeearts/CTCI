@@ -6,6 +6,22 @@ import random
 import re
 import sys
 
+
+# There are a number of people queued up, and each person wears a sticker indicating their initial position in the queue.
+# Initial positions increment by  from  at the front of the line to  at the back.
+# Any person in the queue can bribe the person directly in front of them to swap positions. If two people swap positions, they still wear the same sticker denoting their original places in line.
+# Fascinated by this chaotic queue, you decide you must know the minimum number of bribes that took place to get the queue into its current state!
+def minimumBribes(q):
+    count = 0
+    for i in range(len(q)-1,-1,-1):
+        if q[i] - (i + 1) > 2:
+            print('Too chaotic')
+            return
+        for j in range(max(0, q[i]-2),i):
+            if q[j] > q[i]:
+                count+=1
+    print(count)
+
 # Lilah has a string, , of lowercase English letters that she repeated infinitely many times.
 # Given an integer, , find and print the number of letter a's in the first  letters of Lilah's infinite string
 # Complete the repeatedString function below.
@@ -24,9 +40,6 @@ def repeatedString(s, n):
         index = index + 1
         leftover = leftover - 1
     return int(count)
-
-
-
 
 # You are given an unordered array consisting of consecutive integers  [1, 2, 3, ..., n] without any duplicates.
 # You are allowed to swap any two elements.
