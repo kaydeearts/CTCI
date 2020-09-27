@@ -26,6 +26,20 @@ def checkMagazine(magazine, note):
     print('Yes')
 
 
+def twoStrings(s1, s2):
+    s1_dict = {}
+    i = 0
+    for word in s1:
+        if word in s1_dict:
+            s1_dict[word] = s1_dict[word] + 1
+        else:
+            s1_dict[word] = 1
+    for word in s2:
+        if word in s1_dict:
+            return 'YES'
+    return 'NO'
+
+
 def sherlockAndAnagrams(s):
     lists={}
     i = 0

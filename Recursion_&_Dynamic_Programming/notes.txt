@@ -1,0 +1,10 @@
+Recursion & Dynamic Programming Notes
+by Kamile Demir
+
+
+Interesting insight from the CTCI book:
+
+Problems that involve recursion often start with:
+- "Design an algorithm to compute the nth..."
+- "Write code to list the first n"
+- "Implement a method to compute all..."
