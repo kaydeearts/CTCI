@@ -14,7 +14,7 @@ def maxSubsetSum(arr):
 # Capitalize zero or more of 's lowercase letters.
 # Delete all of the remaining lowercase letters in .
 # Given two strings,  and , determine if it's possible to make  equal to  as described. If so, print YES on a new line. Otherwise, print NO.
-
+#[not done]
 def abbreviation(a, b):
     lenA = len(a)
     lenB = len(b)
@@ -63,3 +63,46 @@ def abbreviation(a, b):
                     return "NO"
         # print(a, b)
         return "YES"
+
+
+
+#Candies - Hackerrank [not done]
+def candies(n, arr):
+    m = [1]*n
+    m[0]= 1
+    total = 1
+    i = 1
+    while i < n-1:
+        if arr[i] > arr[i-1]: #if current is bigger than last
+            m[i] = m[i-1] + 1
+        elif arr[i] > arr[i+1]: #if current is bigger than next
+            m[i] = m[i+1] + 1
+        else:
+            m[i] = 1
+        total = total + m[i]
+        i = i + 1
+    if arr[i] > arr[i-1]: #if current is bigger than last
+        m[i] = m[i-1] + 1
+    else:
+        m[i] = 1
+    total = total + m[i]
+    needsSolving = False
+    while needsSolving:
+        j = 0
+        while j < n-1:
+            if arr[j] > arr[j-1]:
+                if m[j] < m[j-1]:
+                    needsSolving = False
+                    m[j] = m[j-1] + 1
+                else:
+                    needsSolving = True
+            elif arr[i] > arr[i+1]:
+                if m[j] < m[j+1]:
+                    needsSolving = False
+                    m[j] = m[j] + 1
+                else:
+                    needsSolving = True
+            j = j + 1
+            total = total + m[i]
+    print(m)
+    return total
